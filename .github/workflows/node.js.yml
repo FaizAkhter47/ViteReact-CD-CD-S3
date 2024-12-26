@@ -13,7 +13,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [16]   # Use the same version as setup-node below
+        node-version: [v20.16.0]   # Use the same version as setup-node below
 
     steps:
     - uses: actions/checkout@v4
@@ -23,5 +23,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
 
+    - run: sudo apt-get update
+    - run: sudo apt-get install -y build-essential
     - run: npm install
     - run: npm run build   # Build command only, no need to start the app in CI
