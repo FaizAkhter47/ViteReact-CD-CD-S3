@@ -8,6 +8,7 @@ on:
     branches: [ "local" ]
   pull_request:
     branches: [ "local" ]
+  workflow_dispatch:  
 
 jobs:
   build:
