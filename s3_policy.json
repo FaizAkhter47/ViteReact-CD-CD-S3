@@ -19,18 +19,6 @@
           "AWS": "arn:aws:iam::051826707187:user/Fiaz_Akhter"
         },
         "Resource": "arn:aws:s3:::node--project/*"
-      },
-      {
-        "Effect": "Allow",
-        "Action": [
-          "s3:ListBucket",
-          "s3:GetObject",
-          "s3:PutObject"
-        ],
-        "Resource": [
-          "arn:aws:s3:::node--project",
-          "arn:aws:s3:::node--project/*"
-        ]
       }
     ]
   }
