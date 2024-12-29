@@ -21,7 +21,7 @@ jobs:
           aws-secret-access-key: ${{ secrets.S3_KEY }}
           aws-region: ap-south-1  # Replace with your actual region
     
-      - name: Deploy to AWS S3
+      - name: Upload to S3
         run: |
-          echo "S3 pe deploy kar rahe hain..."
-          aws s3 sync . s3://node--project --delete
+          aws s3 cp C:\Users\DELL\Devloper\React2\my-react-app s3://node--project/ --request-payer requester
+
