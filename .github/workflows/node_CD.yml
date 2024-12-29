@@ -1,0 +1,33 @@
+name: CD Pipeline
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploying:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the code
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      # Build the project
+      - name: Build Project
+        run: npm run build
+          echo "Building the project..."
+          # Add your build commands here, e.g., npm install && npm run build
+
+      # Configure AWS credentials
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          S3_ID: ${{ secrets.S3_ID }}
+          S3_KEY: ${{ secrets.S3_KEY }}
+          
+
+      # Deploy to S3
+      - name: Deploy to AWS S3
+        run: |
+          echo "Deploying to S3..."
+          aws s3 sync ./build s3://Fiaz_Akhter --delete
