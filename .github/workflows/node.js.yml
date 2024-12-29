@@ -1,29 +1,25 @@
-name: Node.js CI
+name: Upload to S3
 
 on:
   push:
-    branches: ["local"]
-  pull_request:
-    branches: ["local"]
-  workflow_dispatch:  
+    branches:
+      - main
 
 jobs:
-  build:
+  upload-to-s3:
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [v20.16.0]   # Use the same version as setup-node below
-
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout repository
+      uses: actions/checkout@v2
 
-    - name: Set up Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
+    - name: Set up AWS CLI
+      uses: aws-actions/configure-aws-credentials@v1
       with:
-        node-version: ${{ matrix.node-version }}
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: 'us-east-1'
 
-    - run: sudo apt-get update
-    - run: sudo apt-get install -y build-essential
-    - run: npm install
-    - run: npm run build   # Build command only, no need to start the app in CI
+    - name: Sync files to S3
+      run: |
+        aws s3 sync ./ s3://node--project/ --request-payer requester
