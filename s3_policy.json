@@ -4,6 +4,9 @@
       {
         "Effect": "Allow",
         "Action": "s3:ListBucket",
+        "Principal": {
+          "AWS": "arn:aws:iam::051826707187:user/Fiaz_Akhter"
+        },
         "Resource": "arn:aws:s3:::node--project"
       },
       {
@@ -12,6 +15,9 @@
           "s3:GetObject",
           "s3:PutObject"
         ],
+        "Principal": {
+          "AWS": "arn:aws:iam::051826707187:user/Fiaz_Akhter"
+        },
         "Resource": "arn:aws:s3:::node--project/*"
       }
     ]
