@@ -8,25 +8,27 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Checkout the code
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: v20.16.0
+
       - name: Checkout Code
         uses: actions/checkout@v3
 
-      # Build the project
       - name: Build Project
-        run: npm run build
+        run: |
           echo "Building the project..."
-          # Add your build commands here, e.g., npm install && npm run build
+          npm install
+          npm run build
 
-      # Configure AWS credentials
       - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v4
+        uses: aws-actions/configure-aws-credentials@v2
         with:
-          S3_ID: ${{ secrets.S3_ID }}
-          S3_KEY: ${{ secrets.S3_KEY }}
-          
+          aws-access-key-id: ${{ secrets.S3_ID }}
+          aws-secret-access-key: ${{ secrets.S3_KEY }}
+          aws-region: us-east-1
 
-      # Deploy to S3
       - name: Deploy to AWS S3
         run: |
           echo "Deploying to S3..."
